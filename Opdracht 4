@@ -1,0 +1,50 @@
+package   
+{ 
+    import flash.events.Event; 
+	import flash.display.Sprite; 
+	import flash.events.TimerEvent;
+	import flash.text.TextField;
+	import flash.utils.Timer;
+    
+	public class Main extends Sprite 
+    { 	
+		
+			public var FibonacciReeks: Array = new Array();
+			public var Klokje: Timer = new Timer(2000, 12)
+			public var cirkel: Sprite = new Sprite();
+			public var u:int = -1;
+			public var xpos:int = 400;
+	
+	public function Main():void 
+ 	{
+		FibonacciReeks.push(1);
+		FibonacciReeks.push(1);
+		maakFibonaccireeks();
+		trace(FibonacciReeks);
+		Klokje.addEventListener(TimerEvent.TIMER, tekenCirkels);
+		Klokje.start();
+		
+	}
+		
+	public function maakFibonaccireeks(): void
+		{
+		
+			for (var i: int = 2; i < 300; i++)
+			{
+				FibonacciReeks[i] = FibonacciReeks[i - 1] + FibonacciReeks[i - 2]
+				FibonacciReeks.push(FibonacciReeks[i]);
+			}
+		}
+		
+	public function tekenCirkels(e:TimerEvent): void	
+		{
+			u++;
+			xpos = xpos + FibonacciReeks[u] + FibonacciReeks[u - 1] + 10;
+			
+			cirkel.graphics.beginFill(0xFFFFFF * Math.random(), 0.3);
+            cirkel.graphics.drawCircle(xpos, 300, FibonacciReeks[u])
+			addChild(cirkel) 
+			trace(xpos);
+		}
+	}
+}
