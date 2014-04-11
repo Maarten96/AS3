@@ -14,6 +14,7 @@ package
 			public var cirkel: Sprite = new Sprite();
 			public var u:int = -1;
 			public var xpos:int = 400;
+			public var velocityY:int = 5;
 	
 	public function Main():void 
  	{
@@ -43,8 +44,24 @@ package
 			
 			cirkel.graphics.beginFill(0xFFFFFF * Math.random(), 0.3);
             cirkel.graphics.drawCircle(xpos, 300, FibonacciReeks[u])
+			cirkel.addEventListener(Event.ENTER_FRAME, beweegY);
 			addChild(cirkel) 
 			trace(xpos);
+		}
+		
+		public function beweegY(e:Event):void
+		{
+			
+			cirkel.y += velocityY;
+			if (cirkel.y >= 300)
+			{
+				velocityY *= -1;
+			}
+			
+			if (cirkel.y <= -300)
+			{
+				velocityY *= -1;
+			}
 		}
 	}
 }
