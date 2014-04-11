@@ -1,1 +1,122 @@
-123
+package
+{
+	
+	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
+	import flash.ui.Mouse;
+	import flash.utils.Timer;
+	
+	/**
+	 * ...
+	 * @author Maarten Molendijk
+	 */
+	
+	public class Main extends Sprite 
+	{
+		
+		public var arr:Array = new Array();
+		public var tekst:TextField = new TextField();
+		public var tijd:Timer = new Timer(1000, 0);
+		public var q:int = new int(41);
+		public var i:int = 0;
+		public var m:int = 0
+		public var Tekst:TextField = new TextField();
+		public var punt:int = 0;
+		public var resultaat:TextField = new TextField();
+		public var formaat:TextFormat = new TextFormat();
+		public var mis:int = 0;
+		
+		public function Main():void
+		{
+			
+			for (i = 0; i <= q; i++)
+			{
+				
+				arr.push(new Opdracht5Bal(745 * Math.random(),545 * Math.random(), 0.1, 0, 0));
+				addChild(arr[i]);
+				arr[i].addEventListener(MouseEvent.CLICK, Geklikt);
+				
+			}
+			
+			
+			tijd.addEventListener(TimerEvent.TIMER, Dood);
+			tijd.start();
+			
+			tekst.x = 0;
+			tekst.y = 0;
+			tekst.text = "Score: ";
+			addChild(tekst);
+			
+			formaat.size = 25;
+			
+			resultaat.x = 350;
+			resultaat.y = 300;
+			resultaat.width = 200;
+			resultaat.height = 100;
+			resultaat.defaultTextFormat = formaat;
+			
+		}
+		
+		public function Geklikt(e:MouseEvent):void
+		{
+			
+			punt++;
+			Tekst.text = String("Score: " + punt);
+			addChild(Tekst);
+			
+			if (punt == 42)
+			{
+				
+				Tekst.text = "You won";
+				tijd.stop();
+				resultaat.text = "You won";
+				resultaat.textColor = 0x00FF00;
+				addChild(resultaat);
+				
+				for ( var n:int = 0; n <= q; n++)
+				{
+					
+					removeChild(arr[n]);
+					
+				}
+				
+			}
+			
+		}
+		
+		public function Dood(e:TimerEvent):void
+		{
+			
+			tekst.x = 0;
+			tekst.y = 20;
+			m ++;
+			tekst.text = String("Tijd: " + m);
+			resultaat.text = "GAME OVER \n Je score was: " + punt;
+			resultaat.textColor = 0x000000;
+			
+			if (m == 60)
+			{
+				
+				tijd.stop();
+				addChild(resultaat);
+				
+				for ( var n:int = 0; n <= q; n++)
+				{
+					
+					removeChild(arr[n]);
+					
+				}
+				
+			}
+			
+			addChild(tekst);
+			
+		}
+		
+	}
+	
+}
